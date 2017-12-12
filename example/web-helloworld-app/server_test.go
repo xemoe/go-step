@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/xemoe/go-step/web-helloworld-app/api"
+	"github.com/xemoe/go-step/example/web-helloworld-app/api"
 	"net/http"
 	"net/http/httptest"
 	"os"
