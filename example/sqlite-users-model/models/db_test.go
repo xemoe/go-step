@@ -5,16 +5,21 @@
 package models
 
 import (
+	"fmt"
 	"os"
 	"testing"
 )
 
 var (
-	dbname string = "testing-sqlite-users-model"
+	dbname string = "testing-sqlite-users-model.db3"
 )
 
 func TestMain(m *testing.M) {
 	code := m.Run()
+	//
+	// Remove sqlite test db file after complete test
+	//
+	os.Remove(fmt.Sprintf("%s", dbname))
 	os.Exit(code)
 }
 

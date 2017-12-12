@@ -19,7 +19,7 @@ type DB struct {
 }
 
 const (
-	DBFILE_EXT = "db3"
+	DBFILE_EXT = ".db3"
 )
 
 //
@@ -34,7 +34,7 @@ func NewSqliteDB(dbname string) *DB {
 	// Manipulate sqlite3 db filename with extension
 	//
 	if ext != DBFILE_EXT {
-		dbfile = fmt.Sprintf("%s.%s", dbname, DBFILE_EXT)
+		dbfile = fmt.Sprintf("%s%s", dbname, DBFILE_EXT)
 	} else {
 		dbfile = fmt.Sprintf("%s", dbname)
 	}
