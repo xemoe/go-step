@@ -5,6 +5,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -12,6 +13,10 @@ import (
 
 type App struct {
 	Router *mux.Router
+}
+
+type UserJSON struct {
+	Username string `json:"username"`
 }
 
 //
@@ -33,10 +38,38 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/hi", a.getHelloWorld).Methods("GET")
 }
 
-func (a *App) getHelloWorld(w http.ResponseWriter, r *http.Request) {
-	respondWithJSON(w, http.StatusOK, map[string]string{"message": "Hello world"})
+//
+// Curl example
+// 	`curl -d '{"username":"xemoe"}' \
+//		-H "Content-Type: application/json" \
+//		-X GET http://localhost:3000/hi`
+//
+func (a *App) getHelloWorld(w http.ResponseWriter, req *http.Request) {
+
+	decoder := json.NewDecoder(req.Body)
+	jsondata := UserJSON{}
+	err := decoder.Decode(&jsondata)
+
+	helloto := ""
+	//
+	// Fallback
+	//
+	if err != nil || jsondata.Username == "" {
+		helloto = "world"
+	} else {
+		helloto = jsondata.Username
+	}
+
+	respm := fmt.Sprintf("Hello %s", helloto)
+	respj := map[string]string{}
+	respj["message"] = respm
+
+	respondWithJSON(w, http.StatusOK, respj)
 }
 
+//
+// Responses
+//
 func respondWithError(w http.ResponseWriter, code int, message string) {
 	respondWithJSON(w, code, map[string]string{"error": message})
 }
