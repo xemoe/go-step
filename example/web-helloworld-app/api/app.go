@@ -36,6 +36,7 @@ func (a *App) Run(addr string) {
 //
 func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/hi", a.getHelloWorld).Methods("GET")
+	a.Router.HandleFunc("/simple", a.getSimple).Methods("GET")
 }
 
 //
@@ -63,6 +64,14 @@ func (a *App) getHelloWorld(w http.ResponseWriter, req *http.Request) {
 	respm := fmt.Sprintf("Hello %s", helloto)
 	respj := map[string]string{}
 	respj["message"] = respm
+
+	respondWithJSON(w, http.StatusOK, respj)
+}
+
+func (a *App) getSimple(w http.ResponseWriter, req *http.Request) {
+
+	respj := map[string]string{}
+	respj["message"] = "simple"
 
 	respondWithJSON(w, http.StatusOK, respj)
 }

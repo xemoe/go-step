@@ -33,8 +33,8 @@ func checkResponseCode(t *testing.T, expected, actual int) {
 	}
 }
 
-func TestGetHelloWorld(t *testing.T) {
-	req, _ := http.NewRequest("GET", "/hi", nil)
+func TestGetSimple(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/simple", nil)
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusOK, response.Code)
 }
