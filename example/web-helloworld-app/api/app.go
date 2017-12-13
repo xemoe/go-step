@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type App struct {
@@ -47,7 +48,52 @@ func (a *App) initializeRoutes() {
 //
 func (a *App) getHelloWorld(w http.ResponseWriter, req *http.Request) {
 
+	/**
+	const jstream = `{"Username": "foo"}`
+	decoder := json.NewDecoder(strings.NewReader(jstream))
+
+	defer req.Body.Close()
+	body, _ := ioutil.ReadAll(req.Body)
+	bodylen := len(body)
+
+	if req.Body != nil && bodylen > 0 {
+	}
+	**/
+
 	decoder := json.NewDecoder(req.Body)
+	jsondata := UserJSON{}
+	err := decoder.Decode(&jsondata)
+
+	helloto := ""
+	//
+	// Fallback
+	//
+	if err != nil || jsondata.Username == "" {
+		helloto = "world (fallback)"
+	} else {
+		helloto = jsondata.Username
+	}
+
+	respm := fmt.Sprintf("Hello %s", helloto)
+	respj := map[string]string{}
+	respj["message"] = respm
+
+	respondWithJSON(w, http.StatusOK, respj)
+}
+
+//
+// Curl example
+//  `curl http://localhost:3000/simple`
+//
+func (a *App) getSimple(w http.ResponseWriter, req *http.Request) {
+
+	const jstream = `{"Username": "xemoe"}`
+
+	if req.Body != nil {
+		fmt.Println(req.Body)
+	}
+
+	decoder := json.NewDecoder(strings.NewReader(jstream))
 	jsondata := UserJSON{}
 	err := decoder.Decode(&jsondata)
 
@@ -64,14 +110,6 @@ func (a *App) getHelloWorld(w http.ResponseWriter, req *http.Request) {
 	respm := fmt.Sprintf("Hello %s", helloto)
 	respj := map[string]string{}
 	respj["message"] = respm
-
-	respondWithJSON(w, http.StatusOK, respj)
-}
-
-func (a *App) getSimple(w http.ResponseWriter, req *http.Request) {
-
-	respj := map[string]string{}
-	respj["message"] = "simple"
 
 	respondWithJSON(w, http.StatusOK, respj)
 }
