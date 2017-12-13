@@ -1,5 +1,5 @@
 //
-// db_test.go
+// bootstrap_test.go
 //
 
 package models_test
