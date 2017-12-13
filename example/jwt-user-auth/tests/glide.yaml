@@ -1,0 +1,7 @@
+package: github.com/xemoe/go-step/example/jwt-user-auth/tests
+import: []
+testImport:
+- package: github.com/xemoe/go-step
+  subpackages:
+  - example/jwt-user-auth/auth
+  - example/sqlite-users-model/models
