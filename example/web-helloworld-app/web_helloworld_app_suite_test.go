@@ -62,7 +62,8 @@ func getPage() *agouti.Page {
 		)
 	} else {
 		// Local machines can start chrome normally
-		page, err = agoutiDriver.NewPage(agouti.Browser("chrome"))
+		capabilities := agouti.NewCapabilities().Browser("chrome").Without("javascriptEnabled")
+		page, err = agoutiDriver.NewPage(agouti.Desired(capabilities))
 	}
 	Expect(err).NotTo(HaveOccurred())
 

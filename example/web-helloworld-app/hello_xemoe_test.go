@@ -15,8 +15,16 @@ var _ = Describe("HelloXemoe Page", func() {
 
 		By("go to page", func() {
 
-			Expect(page.Navigate("http://localhost:3000/hi")).To(Succeed())
-			Expect(page).To(HaveURL("http://localhost:3000/hi"))
+			Expect(page.Navigate("http://127.0.0.1:3000/hi")).To(Succeed())
+			Eventually(page).Should(HaveURL("http://127.0.0.1:3000/hi"))
+
+			//
+			// Expected returned json string
+			//
+			expected := `{"message":"Hello world (fallback)"}`
+			pre := page.Find("pre")
+			Eventually(pre).Should(BeVisible())
+			Eventually(pre).Should(HaveText(expected))
 
 		})
 	})
