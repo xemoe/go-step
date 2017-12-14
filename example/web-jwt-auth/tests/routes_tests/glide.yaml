@@ -1,0 +1,4 @@
+package: github.com/xemoe/go-step/example/web-jwt-auth/tests/routes_tests
+import:
+- package: github.com/gorilla/mux
+  version: ~1.6.0
