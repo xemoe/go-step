@@ -1,0 +1,3 @@
+package: github.com/xemoe/go-step/example/web-jwt-auth/tests/unit_test
+import: []
+testImport: []
